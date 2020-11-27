@@ -18,7 +18,7 @@ package org.iban4j;
 /**
  * Thrown to indicate that requested country is not supported.
  */
-public class UnsupportedCountryException extends Iban4jException {
+public final class UnsupportedCountryException extends Iban4jException {
 
     private static final long serialVersionUID = -3733353745417164234L;
 

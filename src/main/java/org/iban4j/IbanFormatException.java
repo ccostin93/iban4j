@@ -22,7 +22,7 @@ import org.iban4j.bban.BbanEntryType;
  * a string to Iban, but that the string does not
  * have the appropriate format.
  */
-public class IbanFormatException extends Iban4jException {
+public final class IbanFormatException extends Iban4jException {
 
     private static final long serialVersionUID = -2715142907876721085L;
 

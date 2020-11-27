@@ -15,13 +15,14 @@
  */
 package org.iban4j;
 
+import static org.iban4j.IbanFormatException.IbanFormatViolation.ACCOUNT_NUMBER_NOT_NULL;
+import static org.iban4j.IbanFormatException.IbanFormatViolation.BANK_CODE_NOT_NULL;
+import static org.iban4j.IbanFormatException.IbanFormatViolation.COUNTRY_CODE_NOT_NULL;
+import static org.iban4j.IbanFormatException.IbanFormatViolation.IBAN_FORMATTING;
 import java.util.List;
 import java.util.Random;
-
 import org.iban4j.bban.BbanStructure;
 import org.iban4j.bban.BbanStructureEntry;
-
-import static org.iban4j.IbanFormatException.IbanFormatViolation.*;
 
 
 /**
@@ -140,10 +141,9 @@ public final class Iban {
      *
      * @param iban the String to be parsed.
      * @return an Iban object holding the value represented by the string argument.
-     * @throws IbanFormatException if the String doesn't contain parsable Iban
-     *         InvalidCheckDigitException if Iban has invalid check digit
-     *         UnsupportedCountryException if Iban's Country is not supported.
-     *
+     * @throws IbanFormatException         if the String doesn't contain parsable Iban
+     * @throws InvalidCheckDigitException  if Iban has invalid check digit
+     * @throws UnsupportedCountryException if Iban's Country is not supported.
      */
     public static Iban valueOf(final String iban) throws IbanFormatException,
             InvalidCheckDigitException, UnsupportedCountryException {
@@ -154,13 +154,12 @@ public final class Iban {
     /**
      * Returns an Iban object holding the value of the specified String.
      *
-     * @param iban the String to be parsed.
+     * @param iban   the String to be parsed.
      * @param format the format of the Iban.
      * @return an Iban object holding the value represented by the string argument.
-     * @throws IbanFormatException if the String doesn't contain parsable Iban
-     *         InvalidCheckDigitException if Iban has invalid check digit
-     *         UnsupportedCountryException if Iban's Country is not supported.
-     *
+     * @throws IbanFormatException         if the String doesn't contain parsable Iban
+     * @throws InvalidCheckDigitException  if Iban has invalid check digit
+     * @throws UnsupportedCountryException if Iban's Country is not supported.
      */
     public static Iban valueOf(final String iban, final IbanFormat format) throws IbanFormatException,
             InvalidCheckDigitException, UnsupportedCountryException {
@@ -168,7 +167,7 @@ public final class Iban {
             case Default:
                 final String ibanWithoutSpaces = iban.replace(" ", "");
                 final Iban ibanObj = valueOf(ibanWithoutSpaces);
-                if(ibanObj.toFormattedString().equals(iban)) {
+                if (ibanObj.toFormattedString().equals(iban)) {
                     return ibanObj;
                 }
                 throw new IbanFormatException(IBAN_FORMATTING,
@@ -204,7 +203,7 @@ public final class Iban {
     @Override
     public boolean equals(final Object obj) {
         if (obj instanceof Iban) {
-            return value.equals(((Iban)obj).value);
+            return value.equals(((Iban) obj).value);
         }
         return false;
     }
@@ -328,9 +327,9 @@ public final class Iban {
          * Builds new iban instance. This methods validates the generated IBAN.
          *
          * @return new iban instance.
-         * @exception IbanFormatException if values are not parsable by Iban Specification
-         *  <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
-         * @exception UnsupportedCountryException if country is not supported
+         * @throws IbanFormatException         if values are not parsable by Iban Specification
+         *                                     <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
+         * @throws UnsupportedCountryException if country is not supported
          */
         public Iban build() throws IbanFormatException,
                 IllegalArgumentException, UnsupportedCountryException {
@@ -341,11 +340,11 @@ public final class Iban {
          * Builds new iban instance.
          *
          * @param validate boolean indicates if the generated IBAN needs to be
-         *  validated after generation
+         *                 validated after generation
          * @return new iban instance.
-         * @exception IbanFormatException if values are not parsable by Iban Specification
-         *  <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
-         * @exception UnsupportedCountryException if country is not supported
+         * @throws IbanFormatException         if values are not parsable by Iban Specification
+         *                                     <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
+         * @throws UnsupportedCountryException if country is not supported
          */
         public Iban build(boolean validate) throws IbanFormatException,
                 IllegalArgumentException, UnsupportedCountryException {
@@ -371,10 +370,9 @@ public final class Iban {
          * Builds random iban instance.
          *
          * @return random iban instance.
-         * @exception IbanFormatException if values are not parsable by Iban Specification
-         *  <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
-         * @exception UnsupportedCountryException if country is not supported
-         *
+         * @throws IbanFormatException         if values are not parsable by Iban Specification
+         *                                     <a href="http://en.wikipedia.org/wiki/ISO_13616">ISO_13616</a>
+         * @throws UnsupportedCountryException if country is not supported
          */
         public Iban buildRandom() throws IbanFormatException,
                 IllegalArgumentException, UnsupportedCountryException {
@@ -398,7 +396,7 @@ public final class Iban {
                         "Country code is not supported.");
             }
 
-            for(final BbanStructureEntry entry : structure.getEntries()) {
+            for (final BbanStructureEntry entry : structure.getEntries()) {
                 switch (entry.getEntryType()) {
                     case bank_code:
                         sb.append(bankCode);
@@ -441,17 +439,17 @@ public final class Iban {
                              final String bankCode,
                              final String accountNumber)
                 throws IbanFormatException {
-            if(countryCode == null) {
+            if (countryCode == null) {
                 throw new IbanFormatException(COUNTRY_CODE_NOT_NULL,
                         "countryCode is required; it cannot be null");
             }
 
-            if(bankCode == null) {
+            if (bankCode == null) {
                 throw new IbanFormatException(BANK_CODE_NOT_NULL,
                         "bankCode is required; it cannot be null");
             }
 
-            if(accountNumber == null) {
+            if (accountNumber == null) {
                 throw new IbanFormatException(ACCOUNT_NUMBER_NOT_NULL,
                         "accountNumber is required; it cannot be null");
             }
@@ -465,7 +463,7 @@ public final class Iban {
                         "Country code is not supported.");
             }
 
-            for(final BbanStructureEntry entry : structure.getEntries()) {
+            for (final BbanStructureEntry entry : structure.getEntries()) {
                 switch (entry.getEntryType()) {
                     case bank_code:
                         if (bankCode == null) {

@@ -20,7 +20,7 @@ package org.iban4j;
  * a string to Bic or to validate Bic's string representation, but the string does not
  * have the appropriate format.
  */
-public class BicFormatException extends Iban4jException {
+public final class BicFormatException extends Iban4jException {
 
     private static final long serialVersionUID = 1764207967955765664L;
 

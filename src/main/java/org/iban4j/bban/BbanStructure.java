@@ -15,15 +15,18 @@
  */
 package org.iban4j.bban;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.List;
 import org.iban4j.CountryCode;
-
-import java.util.*;
 
 
 /**
  * Class which represents bban structure
  */
-public class BbanStructure {
+public final class BbanStructure {
 
     private final BbanStructureEntry[] entries;
 

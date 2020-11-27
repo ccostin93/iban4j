@@ -15,24 +15,24 @@
  */
 package org.iban4j.bban;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 
 /**
  * Bban Structure Entry representation.
  */
-public class BbanStructureEntry {
+public final class BbanStructureEntry {
 
     private final BbanEntryType entryType;
     private final EntryCharacterType characterType;
     private final int length;
 
-    private static Map<EntryCharacterType, char[]> charByCharacterType;
+    private static final Map<EntryCharacterType, char[]> charByCharacterType;
     private final Random random = new Random();
 
     static {
-        charByCharacterType = new HashMap<EntryCharacterType, char[]>();
+        charByCharacterType = new EnumMap<EntryCharacterType, char[]>(EntryCharacterType.class);
         StringBuilder charTypeN = new StringBuilder();
         for (char ch = '0'; ch <= '9'; ch++) {
             charTypeN.append(ch);
@@ -49,8 +49,8 @@ public class BbanStructureEntry {
     }
 
     private BbanStructureEntry(final BbanEntryType entryType,
-                       final EntryCharacterType characterType,
-                       final int length) {
+                               final EntryCharacterType characterType,
+                               final int length) {
         this.entryType = entryType;
         this.characterType = characterType;
         this.length = length;
