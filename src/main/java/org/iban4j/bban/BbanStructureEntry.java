@@ -91,6 +91,11 @@ public class BbanStructureEntry {
                 EntryCharacterType.valueOf(String.valueOf(characterType)), length);
     }
 
+    public static BbanStructureEntry constant(final int length, final char characterType) {
+        return new BbanStructureEntry(BbanEntryType.constant,
+                EntryCharacterType.valueOf(String.valueOf(characterType)), length);
+    }
+
     public BbanEntryType getEntryType() {
         return entryType;
     }
@@ -110,8 +115,15 @@ public class BbanStructureEntry {
     }
 
     public String getRandom() {
+        return getRandom(charByCharacterType.get(characterType));
+    }
+
+    public String getConstant(char ch) {
+        return getRandom(new char[]{ch});
+    }
+
+    private String getRandom(final char[] charChoices) {
         StringBuilder s = new StringBuilder("");
-        char[] charChoices = charByCharacterType.get(characterType);
         if (charChoices == null) {
             throw new RuntimeException(String.format("programmer has not implemented choices for character type %s",
                     characterType.name()));

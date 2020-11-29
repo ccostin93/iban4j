@@ -502,6 +502,11 @@ public final class Iban {
                             identificationNumber = entry.getRandom();
                         }
                         break;
+                    case constant:
+                        if (constant == null) {
+                            constant = entry.getConstant('0');
+                        }
+                        break;
                 }
             }
         }
